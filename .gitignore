@@ -1,0 +1,16 @@
+node_modules/
+.expo/
+.expo-home/
+.npm-cache/
+.expo-server.log
+.expo-server.err.log
+dist/
+build/
+coverage/
+.env
+*.jks
+*.keystore
+credentials.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
