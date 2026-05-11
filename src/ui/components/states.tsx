@@ -10,16 +10,19 @@ export function SkeletonBlock({ height = 88 }: { height?: number }) {
     <Animated.View
       entering={FadeIn.duration(180)}
       exiting={FadeOut.duration(180)}
-      style={{
-        height,
-        borderRadius: 20,
-        borderCurve: "continuous",
-        backgroundColor: colors.graphiteRaised,
-        borderWidth: 1,
-        borderColor: colors.mutedBorder,
-        opacity: 0.78
-      }}
-    />
+    >
+      <View
+        style={{
+          height,
+          borderRadius: 20,
+          borderCurve: "continuous",
+          backgroundColor: colors.graphiteRaised,
+          borderWidth: 1,
+          borderColor: colors.mutedBorder,
+          opacity: 0.78
+        }}
+      />
+    </Animated.View>
   );
 }
 

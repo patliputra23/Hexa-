@@ -1,4 +1,5 @@
 import { Pressable, View } from "react-native";
+import * as Haptics from "expo-haptics";
 import { colors, spacing } from "@/ui/theme";
 import { LumenText } from "./lumen-text";
 
@@ -28,7 +29,10 @@ export function SegmentedTabs<T extends string>({ value, options, onChange }: Se
             key={option.value}
             accessibilityRole="tab"
             accessibilityState={{ selected: active }}
-            onPress={() => onChange(option.value)}
+            onPress={() => {
+              Haptics.selectionAsync().catch(() => {});
+              onChange(option.value);
+            }}
             style={{
               flex: 1,
               minHeight: 38,

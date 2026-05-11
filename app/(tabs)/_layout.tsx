@@ -1,4 +1,5 @@
 import { Tabs } from "expo-router";
+import * as Haptics from "expo-haptics";
 import { Library, Search, UserRound, Download, Home } from "lucide-react-native";
 import { MiniPlayer } from "@/ui/components";
 import { colors } from "@/ui/theme";
@@ -26,11 +27,31 @@ export default function TabsLayout() {
           sceneStyle: { backgroundColor: colors.graphite }
         }}
       >
-        <Tabs.Screen name="(home)/index" options={{ title: "Home", tabBarIcon: tabIcon(Home) }} />
-        <Tabs.Screen name="(search)/index" options={{ title: "Search", tabBarIcon: tabIcon(Search) }} />
-        <Tabs.Screen name="(library)/index" options={{ title: "Library", tabBarIcon: tabIcon(Library) }} />
-        <Tabs.Screen name="(downloads)/index" options={{ title: "Downloads", tabBarIcon: tabIcon(Download) }} />
-        <Tabs.Screen name="(profile)/index" options={{ title: "Profile", tabBarIcon: tabIcon(UserRound) }} />
+        <Tabs.Screen
+          name="(home)"
+          options={{ title: "Home", tabBarIcon: tabIcon(Home) }}
+          listeners={{ tabPress: () => Haptics.selectionAsync().catch(() => {}) }}
+        />
+        <Tabs.Screen
+          name="(search)"
+          options={{ title: "Search", tabBarIcon: tabIcon(Search) }}
+          listeners={{ tabPress: () => Haptics.selectionAsync().catch(() => {}) }}
+        />
+        <Tabs.Screen
+          name="(library)"
+          options={{ title: "Library", tabBarIcon: tabIcon(Library) }}
+          listeners={{ tabPress: () => Haptics.selectionAsync().catch(() => {}) }}
+        />
+        <Tabs.Screen
+          name="(downloads)"
+          options={{ title: "Downloads", tabBarIcon: tabIcon(Download) }}
+          listeners={{ tabPress: () => Haptics.selectionAsync().catch(() => {}) }}
+        />
+        <Tabs.Screen
+          name="(profile)"
+          options={{ title: "Profile", tabBarIcon: tabIcon(UserRound) }}
+          listeners={{ tabPress: () => Haptics.selectionAsync().catch(() => {}) }}
+        />
       </Tabs>
       <MiniPlayer />
     </>

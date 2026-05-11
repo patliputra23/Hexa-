@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from "react";
 import { Pressable, View, type PressableProps, type StyleProp, type ViewStyle } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import * as Haptics from "expo-haptics";
 import type { LucideIcon } from "lucide-react-native";
 import { colors, spacing } from "@/ui/theme";
 import { LumenText } from "./lumen-text";
@@ -30,10 +31,14 @@ export function PrimaryButton({ children, tone = "amber", style, disabled, ...pr
       accessibilityRole="button"
       disabled={disabled}
       onPressIn={() => {
-        scale.value = withSpring(0.98);
+        scale.value = withSpring(0.985, { damping: 18, stiffness: 240 });
       }}
       onPressOut={() => {
-        scale.value = withSpring(1);
+        scale.value = withSpring(1, { damping: 20, stiffness: 260 });
+      }}
+      onPress={(event) => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+        props.onPress?.(event);
       }}
       style={[
         animatedStyle,
@@ -68,12 +73,28 @@ type IconButtonProps = StaticPressableProps & {
 };
 
 export function IconButton({ icon: Icon, label, active, size = 44, style, ...props }: IconButtonProps) {
+  const scale = useSharedValue(1);
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }]
+  }));
+
   return (
-    <Pressable
+    <AnimatedPressable
       accessibilityLabel={label}
       accessibilityRole="button"
       hitSlop={8}
+      onPressIn={() => {
+        scale.value = withSpring(0.94, { damping: 16, stiffness: 280 });
+      }}
+      onPressOut={() => {
+        scale.value = withSpring(1, { damping: 18, stiffness: 260 });
+      }}
+      onPress={(event) => {
+        Haptics.selectionAsync().catch(() => {});
+        props.onPress?.(event);
+      }}
       style={[
+        animatedStyle,
         {
           width: size,
           height: size,
@@ -82,22 +103,42 @@ export function IconButton({ icon: Icon, label, active, size = 44, style, ...pro
           justifyContent: "center",
           backgroundColor: active ? colors.amber : colors.graphiteSoft,
           borderWidth: 1,
-          borderColor: active ? "transparent" : colors.border
+          borderColor: active ? "transparent" : colors.border,
+          shadowColor: "#000",
+          shadowOpacity: active ? 0.28 : 0.12,
+          shadowRadius: active ? 16 : 8,
+          shadowOffset: { width: 0, height: active ? 8 : 4 },
+          elevation: active ? 7 : 3
         },
         style
       ]}
       {...props}
     >
       <Icon size={Math.round(size * 0.45)} color={active ? colors.graphite : colors.ivory} strokeWidth={2.2} />
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 
 export function CardPressable({ children, style, ...props }: PropsWithChildren<StaticPressableProps>) {
+  const scale = useSharedValue(1);
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }]
+  }));
+
   return (
-    <Pressable
+    <AnimatedPressable
       accessibilityRole="button"
+      onPressIn={() => {
+        scale.value = withSpring(0.99, { damping: 18, stiffness: 260 });
+      }}
+      onPressOut={() => {
+        scale.value = withSpring(1, { damping: 20, stiffness: 260 });
+      }}
+      onPress={(event) => {
+        props.onPress?.(event);
+      }}
       style={[
+        animatedStyle,
         {
           backgroundColor: colors.graphiteRaised,
           borderRadius: 22,
@@ -111,6 +152,6 @@ export function CardPressable({ children, style, ...props }: PropsWithChildren<S
       {...props}
     >
       <View style={{ gap: spacing.sm }}>{children}</View>
-    </Pressable>
+    </AnimatedPressable>
   );
 }

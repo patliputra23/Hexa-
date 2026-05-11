@@ -16,10 +16,17 @@ export function PlayerControls({ large = false }: { large?: boolean }) {
   const playSize = large ? 68 : 48;
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: spacing.md }}>
+    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap: spacing.md, paddingHorizontal: spacing.md }}>
       <IconButton icon={Shuffle} label="Toggle shuffle" active={shuffle} onPress={toggleShuffle} />
       <IconButton icon={SkipBack} label="Previous track" onPress={previous} />
-      <IconButton icon={isPlaying ? Pause : Play} label={isPlaying ? "Pause" : "Play"} active size={playSize} onPress={togglePlay} />
+      <IconButton
+        icon={isPlaying ? Pause : Play}
+        label={isPlaying ? "Pause" : "Play"}
+        active
+        size={playSize}
+        style={large ? { shadowOpacity: 0.3, shadowRadius: 18, shadowOffset: { width: 0, height: 10 }, elevation: 9 } : undefined}
+        onPress={togglePlay}
+      />
       <IconButton icon={SkipForward} label="Next track" onPress={next} />
       <IconButton
         icon={repeat === "one" ? Repeat1 : Repeat}

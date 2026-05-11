@@ -42,7 +42,7 @@ export default function RootLayout() {
             <Stack.Screen name="artist/[id]" options={{ title: "Artist" }} />
             <Stack.Screen name="player" options={{ title: "Now Playing", presentation: "modal" }} />
             <Stack.Screen name="queue" options={{ title: "Queue" }} />
-            <Stack.Screen name="playlists" options={{ title: "Playlists" }} />
+            <Stack.Screen name="playlists/index" options={{ title: "Playlists" }} />
             <Stack.Screen name="playlists/[id]" options={{ title: "Playlist" }} />
             <Stack.Screen name="settings" options={{ title: "Settings" }} />
           </Stack>

@@ -53,7 +53,12 @@ export default function ProfileScreen() {
           <IconButton icon={ListMusic} label="Open playlists" />
         </Link>
         <Link href="/settings" asChild>
-          <IconButton icon={Settings} label="Open settings" />
+          <IconButton
+            icon={Settings}
+            label="Open settings"
+            size={40}
+            style={{ opacity: 0.86, shadowOpacity: 0.08, elevation: 2 }}
+          />
         </Link>
         <IconButton icon={UserRound} label="Profile details" active />
       </View>
